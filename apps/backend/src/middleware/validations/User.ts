@@ -21,8 +21,12 @@ export const validatePassword: ValidationChain = body("password")
     "Password must be between 6 and 30 characters and contain at least one letter, one number, and one special character"
   );
 
+export const validateOtp: ValidationChain = body("otp")
+  .notEmpty()
+  .withMessage("Otp is required");
 export const CreateUserValidations = [
   validateName,
   validateEmail,
   validatePassword,
+  validateOtp
 ];
