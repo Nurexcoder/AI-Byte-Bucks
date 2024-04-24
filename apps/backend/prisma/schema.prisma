@@ -1,0 +1,56 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Define the User model
+model User {
+  id       Int     @id @default(autoincrement())
+  name     String
+  email    String  @unique
+  password String
+  wallet   Wallet?
+  userType String
+}
+
+// Define the Wallet model
+model Wallet {
+  id        Int        @id @default(autoincrement())
+  tokens    Int        @default(30)
+  purchases Purchase[] @relation("WalletPurchases")
+  payments  Payment[]  @relation("WalletPayments")
+  user User @relation(fields: [userId],references: [id])
+  userId Int @unique
+ 
+}
+
+// Define the Purchase model
+model Purchase {
+  id             Int      @id @default(autoincrement())
+  tokenPurchased Int
+  totalAmount    Int
+  purchaseDate   DateTime
+  wallet         Wallet   @relation(name: "WalletPurchases", fields: [walletId], references: [id])
+  walletId       Int
+}
+
+// Define the Payment model
+model Payment {
+  id          Int      @id @default(autoincrement())
+  appName     String
+  serviceUsed String
+  tokensUsed  Int
+  paymentDate DateTime
+  wallet      Wallet   @relation(name: "WalletPayments", fields: [walletId], references: [id])
+  walletId    Int
+}
