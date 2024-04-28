@@ -1,20 +1,18 @@
 import { Request, Response } from "express";
 import { UserType } from "../../types";
-import { addUser, findUserByEmail } from "../../prisma/helpers/User";
+import { addUser, findUserByEmail, sendMail } from "../../prisma/helpers/User";
 
-import {generateOtp as generateOtpHelper} from "../../utils/redis/helper";
-
+import { generateOtp as generateOtpHelper } from "../../utils/redis/helper";
 
 export const createUser = async (req: Request, res: Response) => {
   try {
-    const { name, email, password,otp } = req.body;
+    const { name, email, password, otp } = req.body;
     const isUserExist = await findUserByEmail(email);
     if (isUserExist) {
       return res
         .status(409)
         .json({ success: false, message: "User already exists" });
     }
-
 
     await addUser({ name, email, password, userType: UserType.ADMIN });
     res
@@ -28,8 +26,20 @@ export const createUser = async (req: Request, res: Response) => {
 
 export const generateOtp = async (req: Request, res: Response) => {
   try {
-    const { email } = req.body;
+    const { email,name } = req.body;
     const otp = await generateOtpHelper(email);
-    res.status(200).json({ success: true, otp });
-  } catch (error) {}
+
+    if (!otp) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Failed to generate OTP" });
+    }
+
+    await sendMail(email,name, otp);
+
+    res.status(200).json({ success: true, message: "OTP sent successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
 };

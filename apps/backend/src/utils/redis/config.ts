@@ -10,4 +10,5 @@ const redisClient = new redis({
   username: "default",
 });
 
+
 export default redisClient;

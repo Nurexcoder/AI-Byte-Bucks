@@ -24,6 +24,7 @@ export const validatePassword: ValidationChain = body("password")
 export const validateOtp: ValidationChain = body("otp")
   .notEmpty()
   .withMessage("Otp is required");
+
 export const CreateUserValidations = [
   validateName,
   validateEmail,
