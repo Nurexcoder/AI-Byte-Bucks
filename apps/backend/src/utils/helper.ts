@@ -2,6 +2,8 @@ import * as bcrypt from 'bcrypt'
 import * as dotenv from 'dotenv'
 import nodemailer from "nodemailer";
 import smtpTransport from "nodemailer-smtp-transport";
+import { IUser } from '../models/User.model';
+import jwt from 'jsonwebtoken';
 
 dotenv.config()
 const saltRounds = Number(process.env.SALT_ROUNDS)
@@ -9,6 +11,9 @@ const salt = bcrypt.genSaltSync(saltRounds)
 export const encryptPassword = (password: string) => {
    const hashedPassword = bcrypt.hashSync(password, salt)
     return hashedPassword
+}
+export const comparePassword = (password: string, hashedPassword: string) => {
+    return bcrypt.compareSync(password, hashedPassword)
 }
 export const sendMail = async (email: string, name: string, otp: string) => {
     const hostEmail = process.env.HOST_EMAIL;
@@ -43,3 +48,8 @@ export const sendMail = async (email: string, name: string, otp: string) => {
       }
     });
   };
+
+export const generateJWTToken = (user:IUser)=> {
+    return jwt.sign({ id:user._id }, process.env.JWT_SECRET as string, { expiresIn: '180d' });
+  }
+  

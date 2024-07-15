@@ -1,6 +1,6 @@
 import expess from "express";
 import { body } from "express-validator";
-import { createUser, generateOtp } from "../controllers/User";
+import { createUser, generateOtp, login } from "../controllers/User";
 import { CreateUserValidations, validateName } from "../middleware/validations/User";
 import { validateOtp } from "../middleware/validations";
 
@@ -11,6 +11,7 @@ userRouter.get("/", (req, res) => {
 });
 
 userRouter.post("/", [...CreateUserValidations,validateOtp], createUser);
+userRouter.post("/login",login );
 
 userRouter.post("/generate-otp",[validateName], generateOtp);
 
