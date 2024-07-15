@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { UserType } from "../../types";
+import { JwtExtendedRequest, UserType } from "../../types";
 // import { addUser, findUserByEmail, sendMail } from "../../prisma/helpers/User";
 
 import { generateOtp as generateOtpHelper } from "../../utils/redis/helper";
@@ -9,7 +9,8 @@ import {
   generateJWTToken,
   sendMail,
 } from "../../utils/helper";
-import { addUser, findUserByEmail } from "../../models/User.model";
+import { addUser, findUserByEmail, getUserDetailsWithWallet } from "../../models/User.model";
+import { ObjectId } from "mongoose";
 
 export const createUser = async (req: Request, res: Response) => {
   try {
@@ -60,12 +61,13 @@ export const login = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
     const user = await findUserByEmail(email);
+    console.log(user);
     if (!user) {
       return res
         .status(400)
         .json({ success: false, message: "Invalid credentials" });
     }
-    if (comparePassword(password, user.password)) {
+    if (!comparePassword(password, user.password)) {
       return res
         .status(400)
         .json({ success: false, message: "Invalid credentials" });
@@ -88,3 +90,14 @@ export const login = async (req: Request, res: Response) => {
     res.status(500).json({ success: false, message: "Internal server error" });
   }
 };
+
+
+export const getUserDetails = async (req: JwtExtendedRequest, res: Response) => {
+  try {
+    const userWithWallet = await getUserDetailsWithWallet(req.user?.['_id'] );
+
+    res.status(200).json({ success: true, data: userWithWallet });
+  } catch (error) {
+    
+  }
+}

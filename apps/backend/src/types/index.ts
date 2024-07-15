@@ -1,5 +1,7 @@
+import { Request } from "express"
+import { IUser } from "../models/User.model"
+
 export type User = {
-    id?: number
     name: string
     email: string
     user_type: UserType
@@ -8,4 +10,8 @@ export type User = {
 export enum UserType {
     USER = "USER",
     ADMIN = "ADMIN"
+}
+
+export type JwtExtendedRequest = Request & {
+    user?: IUser
 }
