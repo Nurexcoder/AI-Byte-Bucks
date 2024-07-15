@@ -1,8 +1,10 @@
 import { Request, Response } from "express";
 import { UserType } from "../../types";
-import { addUser, findUserByEmail, sendMail } from "../../prisma/helpers/User";
+// import { addUser, findUserByEmail, sendMail } from "../../prisma/helpers/User";
 
 import { generateOtp as generateOtpHelper } from "../../utils/redis/helper";
+import { sendMail } from "../../utils/helper";
+import { addUser, findUserByEmail } from "../../models/User.model";
 
 export const createUser = async (req: Request, res: Response) => {
   try {
@@ -14,7 +16,7 @@ export const createUser = async (req: Request, res: Response) => {
         .json({ success: false, message: "User already exists" });
     }
 
-    await addUser({ name, email, password, userType: UserType.ADMIN });
+    await addUser({ name, email, password, user_type: UserType.ADMIN });
     res
       .status(201)
       .json({ success: true, message: "User created successfully" });

@@ -14,4 +14,6 @@ userRouter.post("/", [...CreateUserValidations,validateOtp], createUser);
 
 userRouter.post("/generate-otp",[validateName], generateOtp);
 
+
+
 export default userRouter;

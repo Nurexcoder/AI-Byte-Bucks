@@ -2,7 +2,7 @@ export type User = {
     id?: number
     name: string
     email: string
-    userType: UserType
+    user_type: UserType
     password: string
 }
 export enum UserType {
