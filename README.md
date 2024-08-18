@@ -35,27 +35,27 @@ This project is an e-wallet system designed to convert AI projects into a Softwa
 The following schema structure is implemented in the MongoDB database:
 
 - **Users**: 
-  - `id` (int, Primary Key)
+  - `id` ( Primary Key)
   - `name` (string)
   - `email` (string)
   - `password` (string)
-  - `wallet_id` (int, Foreign Key)
+  - `wallet_id` ( Foreign Key)
   - `user_type` (string)
 
 - **Wallet**: 
-  - `id` (int, Primary Key)
+  - `id` ( Primary Key)
   - `purchase_ids` (array of int, Foreign Key)
   - `tokens` (int, default: 30)
   - `payment_ids` (array of int, Foreign Key)
 
 - **Purchases**: 
-  - `id` (int, Primary Key)
+  - `id` ( Primary Key)
   - `token_purchased` (int)
   - `total_amount` (int)
   - `purchases_date` (date)
 
 - **Payment**: 
-  - `id` (int, Primary Key)
+  - `id` ( Primary Key)
   - `app_name` (string)
   - `service_used` (string)
   - `tokens_used` (int)
