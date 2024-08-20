@@ -9,7 +9,11 @@ import {
   generateJWTToken,
   sendMail,
 } from "../../utils/helper";
-import { addUser, findUserByEmail, getUserDetailsWithWallet } from "../../models/User.model";
+import {
+  addUser,
+  findUserByEmail,
+  getUserDetailsWithWallet,
+} from "../../models/User.model";
 import { ObjectId } from "mongoose";
 
 export const createUser = async (req: Request, res: Response) => {
@@ -40,6 +44,13 @@ export const createUser = async (req: Request, res: Response) => {
 export const generateOtp = async (req: Request, res: Response) => {
   try {
     const { email, name } = req.body;
+
+    const user = await findUserByEmail(email);
+    if (user) {
+      return res
+        .status(400)
+        .json({ success: false, message: "User already exists" });
+    }
     const otp = await generateOtpHelper(email);
 
     if (!otp) {
@@ -76,28 +87,26 @@ export const login = async (req: Request, res: Response) => {
     // Generate JWT token
     const token = generateJWTToken(user);
 
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: "Login successful",
-        token,
-        name: user.name,
-        email: user.email,
-      });
+    res.status(200).json({
+      success: true,
+      message: "Login successful",
+      token,
+      name: user.name,
+      email: user.email,
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, message: "Internal server error" });
   }
 };
 
-
-export const getUserDetails = async (req: JwtExtendedRequest, res: Response) => {
+export const getUserDetails = async (
+  req: JwtExtendedRequest,
+  res: Response
+) => {
   try {
-    const userWithWallet = await getUserDetailsWithWallet(req.user?.['_id'] );
+    const userWithWallet = await getUserDetailsWithWallet(req.user?.["_id"]);
 
     res.status(200).json({ success: true, data: userWithWallet });
-  } catch (error) {
-    
-  }
-}
+  } catch (error) {}
+};
