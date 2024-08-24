@@ -20,6 +20,12 @@ const config = {
       },
     },
     extend: {
+      backgroundImage: {
+        "radial-login": "radial-gradient(circle, #0085FF 0%, #003465 100%)",
+      },
+      backgroundColor: {
+        primary: "rgba(88, 130, 193, 0.28)",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
