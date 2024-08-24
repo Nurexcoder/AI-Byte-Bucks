@@ -33,10 +33,12 @@
     "packages/*"
   ],
   "dependencies": {
+    "@hookform/resolvers": "^3.9.0",
     "@types/bcrypt": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/nodemailer": "^6.4.14",
     "@types/nodemailer-smtp-transport": "^2.7.8",
+    "axios": "^1.7.5",
     "bcrypt": "^5.1.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
@@ -51,7 +53,10 @@
     "nodemailer": "^6.9.13",
     "nodemailer-smtp-transport": "^2.7.4",
     "otp-generator": "^4.0.1",
+    "react-hook-form": "^7.52.2",
     "tailwind-merge": "^2.5.2",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^3.23.8",
+    "zustand": "^4.5.5"
   }
 }

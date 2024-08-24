@@ -1,17 +1,18 @@
-import { Request } from "express"
-import { IUser } from "../models/User.model"
+import { Request } from "express";
+import { IUser } from "../models/User.model";
+import { UserBase } from "@repo/types";
 
-export type User = {
-    name: string
-    email: string
-    user_type: UserType
-    password: string
-}
-export enum UserType {
+export type User = UserBase & {
+  password: string;
+};
+export  enum UserType {
     USER = "USER",
     ADMIN = "ADMIN"
 }
+  
+
+
 
 export type JwtExtendedRequest = Request & {
-    user?: IUser
-}
+  user?: IUser;
+};

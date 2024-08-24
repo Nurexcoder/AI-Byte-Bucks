@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { JwtExtendedRequest, UserType } from "../../types";
+import { JwtExtendedRequest } from "../../types";
 // import { addUser, findUserByEmail, sendMail } from "../../prisma/helpers/User";
 
 import { generateOtp as generateOtpHelper } from "../../utils/redis/helper";
@@ -14,7 +14,8 @@ import {
   findUserByEmail,
   getUserDetailsWithWallet,
 } from "../../models/User.model";
-import { ObjectId } from "mongoose";
+import { UserType } from "@repo/types";
+
 
 export const createUser = async (req: Request, res: Response) => {
   try {
