@@ -32,10 +32,10 @@ const handler = NextAuth({
             };
           }
 
-          return null;
-        } catch (error) {
+          throw new Error('Invalid credentials');
+        } catch (error: any) {
           console.error("Error during authentication", error);
-          return null;
+          throw new Error(error?.response?.data?.message || 'Authentication error');
         }
       },
     }),

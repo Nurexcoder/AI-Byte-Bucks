@@ -1,13 +1,15 @@
-import type { Config } from "tailwindcss"
+import type { Config } from "tailwindcss";
+import tailwindcssAnimate from "tailwindcss-animate";
+import colors from 'tailwindcss/colors';  // ES module import
 
-const config = {
+const config: Config = {
   darkMode: ["class"],
   content: [
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
-	],
+  ],
   prefix: "",
   theme: {
     container: {
@@ -18,6 +20,9 @@ const config = {
       },
     },
     extend: {
+      backgroundColor: {
+        primary: "rgba(88, 130, 193, 0.28)",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -74,7 +79,7 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
-} satisfies Config
+  plugins: [tailwindcssAnimate],
+};
 
-export default config
+export default config;

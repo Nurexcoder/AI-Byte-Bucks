@@ -50,7 +50,7 @@ export const generateOtp = async (req: Request, res: Response) => {
     if (user) {
       return res
         .status(400)
-        .json({ success: false, message: "User already exists" });
+        .json({ success: false, message: "Email already exists. Please login" });
     }
     const otp = await generateOtpHelper(email);
 

@@ -2,13 +2,16 @@
 import axios from 'axios';
 import { getToken } from 'next-auth/jwt';
 
+export const baseURL = 'http://localhost:5000/api';
+
 // Create an Axios instance with a base URL
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:5000/api', // Set your base URL here
+  baseURL: baseURL, // Set your base URL here
   headers: {
     'Content-Type': 'application/json',
   },
 });
+
 
 // Request Interceptor to add Authorization token
 axiosInstance.interceptors.request.use(
