@@ -73,7 +73,7 @@ The following schema structure is implemented in the MongoDB database:
 
 1. **Clone the repository**:
     ```bash
-    git clone https://github.com/your-username/your-repo.git
+    git clone https://github.com/Nurexcoder/AI-Byte-Bucks
     ```
 
 2. **Install dependencies**:
@@ -88,7 +88,7 @@ The following schema structure is implemented in the MongoDB database:
 
 4. **Run the development server**:
     ```bash
-    turbo dev
+    npm run dev
     ```
 
 ## Usage
